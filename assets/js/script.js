@@ -1,4 +1,3 @@
-
 //4 Coding Quiz questions with 4 possible answers
 const questions = [
     {
@@ -33,7 +32,8 @@ const quizStart = document.getElementById("quiz-start");
 const quizContainer = document.getElementById("quiz");
 const questionDisplay = document.getElementById("question");
 const answersDisplay = document.getElementById("answers");
-const feedbackDisplay = document.getElementById("feedback");
+const wrongAnswerDisplay = document.getElementById("wrongAnswer");
+const correctAnswerDisplay = document.getElementById("correctAnswer");
 const timerDisplay = document.getElementById("time-left");
 const gameOverScreen = document.getElementById("game-over");
 const initialsForm = document.getElementById("initials-form");
@@ -80,9 +80,9 @@ function checkAnswer(answer) {
             gameOver();
         }
     } else {
-        feedbackDisplay.classList.remove("hidden");
+        wrongAnswerDisplay.classList.remove("hidden");
         setTimeout(() => {
-            feedbackDisplay.classList.add("hidden");
+            wrongAnswerDisplay.classList.add("hidden");
         }, 1000);
         currentQuestionIndex++; // Move to the next question even if the answer is wrong
         if (currentQuestionIndex < questions.length) {
@@ -92,7 +92,7 @@ function checkAnswer(answer) {
         }
     }
 }
-
+//if user does not anwser the quiz with 60 second it goes to this or complete the quiz 
 function gameOver() {
     quizContainer.classList.add("hidden");
     gameOverScreen.classList.remove("hidden");
@@ -101,19 +101,21 @@ function gameOver() {
     highscoresLink.classList.remove("hidden");
 }
 
+//once, user submit the intitials, it saves to local storage with key 'Scores' with intial and score
 function saveHighscore(event) {
     event.preventDefault();
     const initials = document.getElementById("initials").value.toUpperCase();
     const score = timeLeft;
-    const highscoreData = JSON.parse(localStorage.getItem("highscores")) || [];
+    const highscoreData = JSON.parse(localStorage.getItem("Scores")) || [];
     highscoreData.push({ initials, score });
     highscoreData.sort((a, b) => b.score - a.score);
-    localStorage.setItem("highscores", JSON.stringify(highscoreData));
+    localStorage.setItem("Scores", JSON.stringify(highscoreData));
     displayHighscores();
 }
 
+//displying all the data from local storage from key 'scores' and adding html elements <li> to highscoresList
 function displayHighscores() {
-    const highscoreData = JSON.parse(localStorage.getItem("highscores")) || [];
+    const highscoreData = JSON.parse(localStorage.getItem("Scores")) || [];
     highscoresList.innerHTML = highscoreData.map(data => `<li>${data.initials}: <span>${data.score}</span></li>`).join('');
 }
 
