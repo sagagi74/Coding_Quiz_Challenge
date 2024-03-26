@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Quiz Challege</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Coding Quiz Challenge</h1>
+        </header>
+        <div id="quiz-start">
+            <button id="start-button">Take Quiz</button>
+        </div>
+        <div id="quiz" class="hidden">
+            <div id="question"></div>
+            <div id="answers"></div>
+            <div id="feedback" class="hidden">Wrong!</div>
+            <div id="timer">Time Left: <span id="time-left">60</span> seconds</div>
+        </div>
+        <div id="game-over" class="hidden">
+            <h2>Game Over!</h2>
+            <form id="initials-form">
+                <label for="initials">Enter Your Initials:</label>
+                <input type="text" id="initials" maxlength="3" required>
+                <button type="submit">Submit</button>
+            </form>
+            <ul id="highscores"></ul>
+        </div>
+        <a href="#" id="highscores-link" class="hidden">View Highscores</a>
+    </div>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
