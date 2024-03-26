@@ -3,7 +3,7 @@ const questions = [
     {
         question: "What does the keyword '" + "this" + "' refer to in JavaScript?",
         answers: ["Refers to the current HTML element", "Refers to the current function", "Refers to the current object", " Refers to the global object"],
-        correctAnswer: "Hyper Text Markup Language"
+        correctAnswer: "Refers to the current object"
     },
     {
         question: "What is the purpose of the '" + "git clone" + "'command in Git?",
@@ -51,13 +51,14 @@ function startTimer() {
     timerInterval = setInterval(() => {
         timeLeft--;
         timerDisplay.textContent = timeLeft;
+       //if Quiz is not answered within 60 second, it goes to gamover()
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
             gameOver();
         }
     }, 1000);
 }
-
+// show contents  from questions
 function showQuestion() {
     const currentQuestion = questions[currentQuestionIndex];
     questionDisplay.textContent = currentQuestion.question;
@@ -73,6 +74,12 @@ function showQuestion() {
 function checkAnswer(answer) {
     const currentQuestion = questions[currentQuestionIndex];
     if (answer === currentQuestion.correctAnswer) {
+        //if answer is correct display 'Correct Answer!" for one second
+        correctAnswerDisplay.classList.remove("hidden");
+        setTimeout(() => {
+            correctAnswerDisplay.classList.add("hidden");
+        }, 1000);
+
         currentQuestionIndex++;
         if (currentQuestionIndex < questions.length) {
             showQuestion();
@@ -80,10 +87,17 @@ function checkAnswer(answer) {
             gameOver();
         }
     } else {
+         //if answer is wrong display 'wrong Answer!" for one second
         wrongAnswerDisplay.classList.remove("hidden");
         setTimeout(() => {
             wrongAnswerDisplay.classList.add("hidden");
         }, 1000);
+
+        //WHEN I answer a question incorrectly, then time is subtracted from the clock -5 seconds
+        console.log  (timeLeft) 
+        timeLeft = timeLeft - 5        
+
+
         currentQuestionIndex++; // Move to the next question even if the answer is wrong
         if (currentQuestionIndex < questions.length) {
             showQuestion();
@@ -119,11 +133,11 @@ function displayHighscores() {
     highscoresList.innerHTML = highscoreData.map(data => `<li>${data.initials}: <span>${data.score}</span></li>`).join('');
 }
 
-highscoresLink.addEventListener("click", () => {
+    highscoresLink.addEventListener("click", () => {
     gameOverScreen.classList.add("hidden");
     quizStart.classList.add("hidden");
     quizContainer.classList.add("hidden");
     highscoresList.classList.remove("hidden");
 });
-
+//triger event when user click on start-button
 document.getElementById("start-button").addEventListener("click", startQuiz);
