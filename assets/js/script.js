@@ -1,14 +1,28 @@
+
+//4 Coding Quiz questions with 4 possible answers
 const questions = [
     {
-        question: "What does HTML stand for?",
-        answers: ["Hyper Text Markup Language", "Hyperlinks and Text Markup Language", "Home Tool Markup Language", "Hyper Tool Markup Language"],
+        question: "What does the keyword '" + "this" + "' refer to in JavaScript?",
+        answers: ["Refers to the current HTML element", "Refers to the current function", "Refers to the current object", " Refers to the global object"],
         correctAnswer: "Hyper Text Markup Language"
     },
     {
-        question: "Which of the following is a JavaScript data type?",
-        answers: ["Boolean", "Number", "String", "All of the above"],
-        correctAnswer: "All of the above"
+        question: "What is the purpose of the '" + "git clone" + "'command in Git?",
+        answers: ["To create a new Git repository", "To create a local copy of an existing Git repository", "To merge two branches in Git", "To delete a Git repository"],
+        correctAnswer: "To create a local copy of an existing Git repository"
+    },
+    {
+        question: "In HTML, which tag is used to create a hyperlink?",
+        answers: ["<link>", "<a>", "<href>", "<hyperlink>"],
+        correctAnswer: "<a>"
+    },
+    {
+        question: "What does the CSS property '" + "display: none;" + " do?",
+        answers: ["Hides an element from the page without affecting layout", "Removes an element from the DOM", "Shows an element on the page", "Makes an element semi-transparent"],
+        correctAnswer: "Hides an element from the page without affecting layout"
     }
+    
+
 ];
 
 let currentQuestionIndex = 0;
