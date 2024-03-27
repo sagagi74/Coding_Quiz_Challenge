@@ -23,7 +23,7 @@ const questions = [
     
 
 ];
-
+//block scope only accessed inside scope 
 let currentQuestionIndex = 0;
 //set time to 60 seconds
 let timeLeft = 60;
@@ -35,6 +35,7 @@ var scoresPercentage = 0;
 
 
 //getElementById from HTML
+//const can not change variable, but array const can be changed
 const quizStart = document.getElementById("quiz-start");
 const quizContainer = document.getElementById("quiz");
 const questionDisplay = document.getElementById("question");
@@ -46,16 +47,25 @@ const gameOverScreen = document.getElementById("game-over");
 const initialsForm = document.getElementById("initials-form");
 const highscoresList = document.getElementById("highscores");
 const highscoresLink = document.getElementById("highscores-link");
+//var can change the vaiable
 var gameOverHeading = document.getElementById("game-over-heading");
-var quizTittle = document.getElementById("quizTittle");
-var quizDescription = document.getElementById("quizDescription");
+var titleHeading = document.getElementById("Title-heading");
+var titleDescription = document.getElementById("Title-Description");
+var titleDescription = document.getElementById("High-Scores_Display");
+var titleDescription = document.getElementById("Goback-button");
+var titleDescription = document.getElementById("Title-Description");
 
+
+
+console.log(titleHeading.textContent)
+console.log (titleDescription.textContent)
 //function startQuiz
 function startQuiz() {
-   // quizTittle.textContent = "";
-   // quizDescription.textContent = "";
+    //when quiz starts titleheading and title description to "", I used it intead of hidden classlist to show other options.
+    titleHeading.textContent = "";
+    titleDescription.textContent = "";
 
-   console.log (quizTittle.innerHTML)
+   //console.log (quizTittle.innerHTML)
 
     quizStart.classList.add("hidden");
     startTimer();
@@ -84,7 +94,12 @@ function showQuestion() {
     currentQuestion.answers.forEach(answer => {
         const button = document.createElement("button");
         button.textContent = answer;
-        button.addEventListener("click", () => checkAnswer(answer));
+      
+        //button.addEventListener("click", () => checkAnswer(answer));
+     
+        button.addEventListener("click", function() {
+            checkAnswer(answer);
+        });
         answersDisplay.appendChild(button);
     });
 }
@@ -173,16 +188,46 @@ function saveHighscore(event) {
 }
 
 //displying all the data from local storage from key 'scores' and adding html elements <li> to highscoresList
+//function displayHighscores() {
+   // const highscoreData = JSON.parse(localStorage.getItem("Scores")) || [];
+    //used to map to change the contents, learned 3-26-2024 applying a function to it and then 
+    //returns a new array containing the results of applying the function to each element of the original
+  //  highscoresList.innerHTML = highscoreData.map(data => `<li>${data.initials}: <span>${data.score} % </span></li>`).join('');
+//}
+
+   // highscoresLink.addEventListener("click", () => {
+   // gameOverScreen.classList.add("hidden");
+   /// quizStart.classList.add("hidden");
+   // quizContainer.classList.add("hidden");
+   // highscoresList.classList.remove("hidden");
+//});
+
+
 function displayHighscores() {
     const highscoreData = JSON.parse(localStorage.getItem("Scores")) || [];
-    highscoresList.innerHTML = highscoreData.map(data => `<li>${data.initials}: <span>${data.score} % </span></li>`).join('');
+    let html = ''; // Initialize an empty string to store the HTML content
+
+    // Iterate over each item in highscoreData
+    for (let i = 0; i < highscoreData.length; i++) {
+        const data = highscoreData[i];
+        // Concatenate the HTML content for each item
+        html += '<li>' + data.initials + ': <span>' + data.score + ' % </span></li>';
+    }
+    
+    // Set the innerHTML of highscoresList with the concatenated HTML
+    highscoresList.innerHTML = html;
 }
 
-    highscoresLink.addEventListener("click", () => {
+highscoresLink.addEventListener("click", function() {
     gameOverScreen.classList.add("hidden");
     quizStart.classList.add("hidden");
     quizContainer.classList.add("hidden");
     highscoresList.classList.remove("hidden");
+    displayHighscores(); // Call displayHighscores to update highscoresList
 });
+
+
+
+
 //triger event when user click on start-button
 document.getElementById("start-button").addEventListener("click", startQuiz);
