@@ -157,7 +157,7 @@ function gameOver() {
         scoresPercentage = 0    
     //if Quiz is completed Message with scores    
     } else{
-    gameOverHeading.textContent = gameOverHeading.textContent + " Correct Answers: " + correctAnswer + " Wrong Answers: " + wrongAnswer + " Your Grades for This Quiz: " + scoresPercentage + " %.  Finished In: " + timeLeft + " Seconds";
+    gameOverHeading.textContent = gameOverHeading.textContent + " Correct Answers: " + correctAnswer + " Wrong Answers: " + wrongAnswer + " Your Grades for This Quiz: " + scoresPercentage + " %.  Finished In: " + timeLeft + " Seconds left";
     }
     
     console.log("correct:" + correctAnswer);
@@ -201,7 +201,7 @@ function displayHighscores() {
         // Concatenate the HTML content for each item
        // html += '<li>' + data.initials + ': <span>' + data.score + ' % </span></li>';
 
-        html += "<li>" + data.initials + ": <span>" + data.score + "% </span>" + "  (Completed the Quiz in: " + data.finished  + " seconds)</li>";
+        html += "<li>" + data.initials + ": <span>" + data.score + "% </span>" + "  (Completed the Quiz in: " + data.finished  + " seconds left)</li>";
     }
     // Set the innerHTML of highscoresList with the concatenated HTML
     highscoresList.innerHTML = html;
@@ -241,7 +241,7 @@ function clearLocalStorages(){
     // Clear the highscores list
     highscoresList.innerHTML = ""; 
 }
-//triger event when user click 
+//trigger event when user click 
 startButton.addEventListener("click", startQuiz);
 gobackButton.addEventListener("click", goBack);
 clearButton.addEventListener("click", clearLocalStorages);
