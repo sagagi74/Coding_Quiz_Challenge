@@ -9,8 +9,9 @@
 <body>
     <div class="container">
         <header>
-            <h1 id="Title-heading">Coding Quiz Challenge</h1>
-            <h2 id="Title-Description"> Try to answer the following code-realted questions with the time limit.
+            <a href="#" id="highscores-link" class="hidden">View Highscores</a>
+            <h1 id="Title-heading" class="hidden">Coding Quiz Challenge</h1>
+            <h2 id="Title-Description" class="hidden"> Try to answer the following code-realted questions with the time limit.
                 Keep in mind that incorrect answers will penalize your score time by ten seconds.
             </h2>
             <br>
@@ -19,11 +20,12 @@
             <button id="start-button">Start Quiz</button>
         </div>
         <div id="quiz" class="hidden">
+            <div id="timer">Time Left: <span id="time-left">60</span> seconds</div>
             <div id="question"></div>
             <div id="answers"></div>
             <div id="wrongAnswer" class="hidden">Wrong Answer!</div>
             <div id="correctAnswer" class = "hidden">Correct Answer!</div>
-            <div id="timer">Time Left: <span id="time-left">60</span> seconds</div>
+            
         </div>
         <div id="game-over" class="hidden">
             <h3 id="game-over-heading">Game Over!</h3>
@@ -35,13 +37,13 @@
             
         </div>
         <div>
-            <h3 id="High-Scores_Display">HighScores</h3>
+            <h3 id="High-Scores_Display" class="hidden" >HighScores</h3>
             <ul id="highscores"></ul>
-            <button id="Goback-button">GoBack</button>
-            <button id="Clear-button">Clear Highscores</button>
+            <button id="Goback-button" class="hidden">GoBack</button>
+            <button id="Clear-button" class="hidden">Clear Highscores</button>
         </div>
 
-        <a href="#" id="highscores-link" class="hidden">View Highscores</a>
+       
     </div>
     <script src="./assets/js/script.js"></script>
 </body>

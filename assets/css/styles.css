@@ -23,6 +23,17 @@ h1 {
     margin: 0;
 }
 
+#Title-Description {
+    font-size: 20px;
+    color: red;
+}
+
+.answer-button {
+    margin-right: 30px; /* Adjust as needed */
+}
+
+ 
+
 .hidden {
     display: none;
 }
@@ -76,6 +87,7 @@ h1 {
 }
 
 #highscores-link {
+    
     display: block;
     text-align: left;
     margin-top: 20px;

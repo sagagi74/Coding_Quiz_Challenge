@@ -23,17 +23,17 @@ const questions = [
     
 
 ];
-//block scope only accessed inside scope 
+//set block scope only accessed inside scope 
 let currentQuestionIndex = 0;
 //set time to 60 seconds
 let timeLeft = 60;
 let timerInterval;
 //set value to 0 to start and laster use thes variable to caculate scores
+//var can change the vaiable
 var correctAnswer = 0;
 var wrongAnswer = 0;
 var scoresPercentage = 0;
-
-
+var gameOverHeading = document.getElementById("game-over-heading");
 //getElementById from HTML
 //const can not change variable, but array const can be changed
 const quizStart = document.getElementById("quiz-start");
@@ -47,26 +47,24 @@ const gameOverScreen = document.getElementById("game-over");
 const initialsForm = document.getElementById("initials-form");
 const highscoresList = document.getElementById("highscores");
 const highscoresLink = document.getElementById("highscores-link");
-//var can change the vaiable
-var gameOverHeading = document.getElementById("game-over-heading");
-var titleHeading = document.getElementById("Title-heading");
-var titleDescription = document.getElementById("Title-Description");
-var titleDescription = document.getElementById("High-Scores_Display");
-var titleDescription = document.getElementById("Goback-button");
-var titleDescription = document.getElementById("Title-Description");
+const titleHeading = document.getElementById("Title-heading");
+const titleDescription = document.getElementById("Title-Description");
+const startButton = document.getElementById("start-button")
+const gobackButton = document.getElementById("Goback-button")
+const clearButton =document.getElementById("Clear-button")
+const highscoretext =document.getElementById("High-Scores_Display")
 
+//show contents on titleheaing and titledescription at begining 
+titleHeading.classList.remove("hidden")
+titleDescription.classList.remove("hidden")
 
-
-console.log(titleHeading.textContent)
-console.log (titleDescription.textContent)
 //function startQuiz
 function startQuiz() {
-    //when quiz starts titleheading and title description to "", I used it intead of hidden classlist to show other options.
-    titleHeading.textContent = "";
-    titleDescription.textContent = "";
-
+    scoresPercentage = 0
+   //hide contents on titleheaing and titledescription
+   titleHeading.classList.add("hidden")
+   titleDescription.classList.add("hidden")
    //console.log (quizTittle.innerHTML)
-
     quizStart.classList.add("hidden");
     startTimer();
     showQuestion();
@@ -84,32 +82,32 @@ function startTimer() {
         }
     }, 1000);
 }
-// show contents  from questions function
-function showQuestion() {
 
+
+function showQuestion() {
     const currentQuestion = questions[currentQuestionIndex];
     questionDisplay.textContent = currentQuestion.question;
-    answersDisplay.innerHTML = "";
-   
-    currentQuestion.answers.forEach(answer => {
+    answersDisplay.innerHTML = ""; 
+    var answerOrder;  
+
+    for (let i = 0; i < currentQuestion.answers.length; i++) {
+        const answer = currentQuestion.answers[i];
         const button = document.createElement("button");
-        button.textContent = answer;
-      
-        //button.addEventListener("click", () => checkAnswer(answer));
-     
+        answerOrder = i + 1  
+
+        button.textContent = answerOrder +" "+ answer;
         button.addEventListener("click", function() {
             checkAnswer(answer);
         });
         answersDisplay.appendChild(button);
-    });
+    }
 }
+
 
 function checkAnswer(answer) {
     const currentQuestion = questions[currentQuestionIndex];
     if (answer === currentQuestion.correctAnswer) {
-
         //if answer is correct display 'Correct Answer!" for one second
-        
         correctAnswerDisplay.classList.remove("hidden");
         setTimeout(() => {
             correctAnswerDisplay.classList.add("hidden");
@@ -151,15 +149,15 @@ function gameOver() {
     var combinedScores = correctAnswer + wrongAnswer
     scoresPercentage = correctAnswer/(correctAnswer+wrongAnswer) * 100
     console.log ("scores: "+ scoresPercentage)
-    
-    
+    gameOverHeading.textContent = "";
     console.log(combinedScores)
     //if Quiz question are not answered within 60 second Message
     if (combinedScores !== 4 ){
-        gameOverHeading.textContent = "Time has passed, You faild the quiz, Please try again !"
+        gameOverHeading.textContent = "The time for the Quiz has passed, You faild the quiz, Please try again !"
+        scoresPercentage = 0    
     //if Quiz is completed Message with scores    
     } else{
-    gameOverHeading.textContent = gameOverHeading.textContent + " Correct Answers: " + correctAnswer + " Wrong Answers: " + wrongAnswer + " Your Grades for This Quiz: " + scoresPercentage + " %";
+    gameOverHeading.textContent = gameOverHeading.textContent + " Correct Answers: " + correctAnswer + " Wrong Answers: " + wrongAnswer + " Your Grades for This Quiz: " + scoresPercentage + " %.  Finished In: " + timeLeft + " Seconds";
     }
     
     console.log("correct:" + correctAnswer);
@@ -175,45 +173,36 @@ function gameOver() {
 function saveHighscore(event) {
     event.preventDefault();
     console.log ("scores: "+ scoresPercentage)
-
-
-
    const initials = document.getElementById("initials").value.toUpperCase();
    const score = scoresPercentage;
+   const finished = timeLeft;
    const highscoreData = JSON.parse(localStorage.getItem("Scores")) || [];
-   highscoreData.push({ initials, score });
+   highscoreData.push({ initials, score,finished});
+   //sorted by high scores
    highscoreData.sort((a, b) => b.score - a.score);
    localStorage.setItem("Scores", JSON.stringify(highscoreData));
    displayHighscores();
 }
 
-//displying all the data from local storage from key 'scores' and adding html elements <li> to highscoresList
-//function displayHighscores() {
-   // const highscoreData = JSON.parse(localStorage.getItem("Scores")) || [];
-    //used to map to change the contents, learned 3-26-2024 applying a function to it and then 
-    //returns a new array containing the results of applying the function to each element of the original
-  //  highscoresList.innerHTML = highscoreData.map(data => `<li>${data.initials}: <span>${data.score} % </span></li>`).join('');
-//}
-
-   // highscoresLink.addEventListener("click", () => {
-   // gameOverScreen.classList.add("hidden");
-   /// quizStart.classList.add("hidden");
-   // quizContainer.classList.add("hidden");
-   // highscoresList.classList.remove("hidden");
-//});
-
 
 function displayHighscores() {
+    gameOverScreen.classList.add("hidden");
+    quizStart.classList.add("hidden");
+    quizContainer.classList.add("hidden");
+    highscoresList.classList.remove("hidden")
+    gobackButton.classList.remove("hidden")
+    clearButton.classList.remove("hidden")
+    highscoretext.classList.remove("hidden")
     const highscoreData = JSON.parse(localStorage.getItem("Scores")) || [];
     let html = ''; // Initialize an empty string to store the HTML content
-
     // Iterate over each item in highscoreData
     for (let i = 0; i < highscoreData.length; i++) {
         const data = highscoreData[i];
         // Concatenate the HTML content for each item
-        html += '<li>' + data.initials + ': <span>' + data.score + ' % </span></li>';
+       // html += '<li>' + data.initials + ': <span>' + data.score + ' % </span></li>';
+
+        html += "<li>" + data.initials + ": <span>" + data.score + "% </span>" + "  (Completed the Quiz in: " + data.finished  + " seconds)</li>";
     }
-    
     // Set the innerHTML of highscoresList with the concatenated HTML
     highscoresList.innerHTML = html;
 }
@@ -227,46 +216,32 @@ highscoresLink.addEventListener("click", function() {
 });
 
 function goBack(){
-
-   // startQuiz()
-
-
    // Reset variables to initial state
    currentQuestionIndex = 0;
    timeLeft = 60;
    correctAnswer = 0;
    wrongAnswer = 0;
    scoresPercentage = 0;
-
    // Reset timer display
    timerDisplay.textContent = timeLeft;
-
    // Hide game over screen and show quiz start screen
    gameOverScreen.classList.add("hidden");
    quizStart.classList.remove("hidden");
-
+   titleHeading.classList.remove("hidden")
+   titleDescription.classList.remove("hidden") 
+   gobackButton.classList.add("hidden")
+   clearButton.classList.add("hidden")
+   highscoretext.classList.add("hidden")
    // Clear the highscores list
    highscoresList.innerHTML = "";
-
 }
-
 function clearLocalStorages(){
-
     //Remove the "Scores" key from local storage
     localStorage.removeItem("Scores");
-
     // Clear the highscores list
-    highscoresList.innerHTML = "";
-
-   
+    highscoresList.innerHTML = ""; 
 }
-
-
-
-
-//triger event when user click on start-button
-document.getElementById("start-button").addEventListener("click", startQuiz);
-
-document.getElementById("Goback-button").addEventListener("click", goBack);
-
-document.getElementById("Clear-button").addEventListener("click", clearLocalStorages);
+//triger event when user click 
+startButton.addEventListener("click", startQuiz);
+gobackButton.addEventListener("click", goBack);
+clearButton.addEventListener("click", clearLocalStorages);
