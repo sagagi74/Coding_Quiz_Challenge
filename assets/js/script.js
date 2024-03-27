@@ -226,8 +226,47 @@ highscoresLink.addEventListener("click", function() {
     displayHighscores(); // Call displayHighscores to update highscoresList
 });
 
+function goBack(){
+
+   // startQuiz()
+
+
+   // Reset variables to initial state
+   currentQuestionIndex = 0;
+   timeLeft = 60;
+   correctAnswer = 0;
+   wrongAnswer = 0;
+   scoresPercentage = 0;
+
+   // Reset timer display
+   timerDisplay.textContent = timeLeft;
+
+   // Hide game over screen and show quiz start screen
+   gameOverScreen.classList.add("hidden");
+   quizStart.classList.remove("hidden");
+
+   // Clear the highscores list
+   highscoresList.innerHTML = "";
+
+}
+
+function clearLocalStorages(){
+
+    //Remove the "Scores" key from local storage
+    localStorage.removeItem("Scores");
+
+    // Clear the highscores list
+    highscoresList.innerHTML = "";
+
+   
+}
+
 
 
 
 //triger event when user click on start-button
 document.getElementById("start-button").addEventListener("click", startQuiz);
+
+document.getElementById("Goback-button").addEventListener("click", goBack);
+
+document.getElementById("Clear-button").addEventListener("click", clearLocalStorages);
