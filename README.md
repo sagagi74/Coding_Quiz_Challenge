@@ -1,3 +1,9 @@
+Rework
+1 added Live site link
+2 added image of  the site 
+
+
+
 This Coding Quiz challenges included HTML, CSS and Javascrips
 spend most of time on javascripts and put many comments to show my intentions of this app.
 on intitial page, I included View Highscores link where users can able to see high scores anytime,
@@ -37,6 +43,11 @@ and go back and clear highscores button shows to start over or clear local store
 I have reviewed Acceptance Criteria list and everthing looks good.
 I spent extra hours adding more functions to enhanced the code as much as I can to make my application presentable.
 
+Live Site Link
+
+https://sagagi74.github.io/Coding_Quiz_Challenge/
+
+![Site Image](assets/Images/Quiz.JPG)
 
 
 
